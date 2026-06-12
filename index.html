@@ -1012,21 +1012,32 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
   <div class="visitor-section">
     <div class="visitor-title">
       <span class="visitor-dot"></span>
-      Website Visitors
+      Live Website Visitors
     </div>
     <div class="visitor-grid">
       <div class="visitor-card today-card">
-        <div class="visitor-num" id="todayCount">—</div>
+        <div class="visitor-num" id="todayCount" style="font-size:1.3rem;color:var(--muted)">...</div>
         <div class="visitor-label">📅 Today</div>
       </div>
       <div class="visitor-card total-card">
-        <div class="visitor-num" id="totalCount">—</div>
+        <div class="visitor-num" id="totalCount" style="font-size:1.3rem;color:var(--muted)">...</div>
         <div class="visitor-label">🌍 All Time</div>
       </div>
     </div>
-    <div class="visitor-note">
+    <!-- Fallback badge — always visible, always works -->
+    <div style="margin-top:0.85rem;text-align:center">
+      <img
+        src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fharshad8623.github.io%2Fcollege-predictor&count_bg=%231A8FE3&title_bg=%230D1E38&icon=fire&icon_color=%23FF9240&title=Visitors+%28Today+%2F+Total%29&edge_flat=true"
+        alt="Visitor Count Badge"
+        id="visitorBadge"
+        style="height:22px;border-radius:4px;opacity:0;transition:opacity 0.4s"
+        onload="this.style.opacity=1"
+        onerror="this.style.display='none'"
+      >
+    </div>
+    <div class="visitor-note" id="visitorNote">
       <span class="visitor-dot" style="width:5px;height:5px"></span>
-      Live counter · Updates on every visit · By Harshad Dhuppe
+      <span id="visitorNoteText">Connecting to live counter…</span>
     </div>
   </div>
 
@@ -1657,59 +1668,88 @@ function showToast(msg) {
 }
 
 // ═══════════════════════════════════════════════════
-//  VISITOR COUNTER
+//  VISITOR COUNTER  (counterapi.dev — active maintained API)
 // ═══════════════════════════════════════════════════
-async function trackVisitor() {
-  // Namespace: unique to this site; key: 'total' for all-time, date for today
-  const NS  = 'harshad-cap-predictor-2026';
-  const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
-  const BASE = 'https://api.countapi.xyz';
+const COUNTER_NS  = 'harshad8623-cap-predictor';
+const COUNTER_BASE = 'https://api.counterapi.dev/v1';
 
-  const fmt = n => n >= 1000000
-    ? (n/1000000).toFixed(1) + 'M'
-    : n >= 1000
-    ? (n/1000).toFixed(1) + 'K'
-    : String(n);
+const fmtNum = n => {
+  n = parseInt(n, 10);
+  if(isNaN(n)) return '—';
+  if(n >= 1000000) return (n/1000000).toFixed(1) + 'M';
+  if(n >= 1000)    return (n/1000).toFixed(1) + 'K';
+  return n.toLocaleString();
+};
+
+async function trackVisitor() {
+  const todayKey  = new Date().toISOString().slice(0,10); // YYYY-MM-DD e.g. 2026-06-13
+  const totalEl   = document.getElementById('totalCount');
+  const todayEl   = document.getElementById('todayCount');
+  const noteEl    = document.getElementById('visitorNoteText');
+
+  // ── Helper: hit a key (increment) and return count ─────────────────
+  async function hitKey(key) {
+    const r = await fetch(`${COUNTER_BASE}/${COUNTER_NS}/${key}/up`, {cache:'no-store'});
+    if(!r.ok) throw new Error(`HTTP ${r.status}`);
+    const d = await r.json();
+    // counterapi.dev returns { count: N, ... }
+    return d.count ?? d.value ?? null;
+  }
 
   try {
-    // Hit total counter (increments + returns value)
-    const [totalRes, todayRes] = await Promise.all([
-      fetch(`${BASE}/hit/${NS}/total`),
-      fetch(`${BASE}/hit/${NS}/${today}`)
-    ]);
-    const [totalData, todayData] = await Promise.all([
-      totalRes.json(),
-      todayRes.json()
+    // Fire both requests in parallel — total visits + today visits
+    const [total, todayCount] = await Promise.all([
+      hitKey('total'),
+      hitKey(`day-${todayKey}`)
     ]);
 
-    const totalEl = document.getElementById('totalCount');
-    const todayEl = document.getElementById('todayCount');
+    if(totalEl && total != null) {
+      totalEl.style.fontSize = '';
+      totalEl.style.color    = '';
+      animateCount(totalEl, total, fmtNum);
+    }
+    if(todayEl && todayCount != null) {
+      todayEl.style.fontSize = '';
+      todayEl.style.color    = '';
+      animateCount(todayEl, todayCount, fmtNum);
+    }
 
-    if(totalEl && totalData.value != null) {
-      animateCount(totalEl, totalData.value, fmt);
+    if(noteEl) noteEl.textContent = 'Live · Updates on every visit · By Harshad Dhuppe';
+
+  } catch(primaryErr) {
+    console.warn('[Counter] Primary API failed:', primaryErr.message);
+
+    // ── FALLBACK: try get-only (no increment) so at least we show a number
+    try {
+      const [r1, r2] = await Promise.all([
+        fetch(`${COUNTER_BASE}/${COUNTER_NS}/total`, {cache:'no-store'}),
+        fetch(`${COUNTER_BASE}/${COUNTER_NS}/day-${todayKey}`, {cache:'no-store'})
+      ]);
+      const [d1, d2] = await Promise.all([r1.json(), r2.json()]);
+      const tot  = d1.count ?? d1.value;
+      const todc = d2.count ?? d2.value;
+      if(totalEl && tot != null)  { totalEl.style.fontSize=''; totalEl.style.color=''; animateCount(totalEl, tot, fmtNum); }
+      if(todayEl && todc != null) { todayEl.style.fontSize=''; todayEl.style.color=''; animateCount(todayEl, todc, fmtNum); }
+      if(noteEl) noteEl.textContent = 'Data from last recorded visit · By Harshad Dhuppe';
+    } catch(fallbackErr) {
+      // Both failed — badge image is still visible as final fallback
+      if(totalEl) totalEl.textContent = '—';
+      if(todayEl) todayEl.textContent = '—';
+      if(noteEl)  noteEl.textContent  = 'Counter temporarily unavailable — see badge below';
+      console.warn('[Counter] Fallback also failed:', fallbackErr.message);
     }
-    if(todayEl && todayData.value != null) {
-      animateCount(todayEl, todayData.value, fmt);
-    }
-  } catch(e) {
-    // Silently fail — counter is non-critical
-    const t = document.getElementById('todayCount');
-    const tot = document.getElementById('totalCount');
-    if(t) t.textContent = '—';
-    if(tot) tot.textContent = '—';
-    console.warn('Visitor counter unavailable:', e);
   }
 }
 
 function animateCount(el, target, fmt) {
-  const duration = 1200;
-  const start = Date.now();
-  const from = 0;
+  target = parseInt(target, 10);
+  if(isNaN(target)) { el.textContent = '—'; return; }
+  const duration = 1400;
+  const start    = Date.now();
   const tick = () => {
-    const elapsed = Date.now() - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    const current = Math.round(from + (target - from) * ease);
+    const progress = Math.min((Date.now() - start) / duration, 1);
+    const ease     = 1 - Math.pow(1 - progress, 3);
+    const current  = Math.round(target * ease);
     el.textContent = fmt(current);
     if(progress < 1) requestAnimationFrame(tick);
     else el.textContent = fmt(target);
