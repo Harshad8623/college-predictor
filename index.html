@@ -1087,28 +1087,52 @@ const CATEGORIES = [
 ];
 
 const CAT_ELIGIBILITY = {
-  'SC':    ['SC','OPEN'],
-  'ST':    ['ST','OPEN'],
-  'OBC':   ['OBC','OPEN'],
-  'EWS':   ['EWS','OPEN'],
-  'SEBC':  ['SEBC','OPEN'],
-  'VJ/DT': ['VJ/DT','OPEN'],
-  'NT1':   ['NT1','OPEN'],
-  'NT2':   ['NT2','OPEN'],
-  'NT3':   ['NT3','OPEN'],
-  'OPEN':  ['OPEN'],
-  'PWD':   ['PWD'],
-  'TFWS':  ['TFWS'],
-  'DEF':   ['DEF'],
-  'ORPHAN':['ORPHAN'],
+  'SC':     ['SC','OPEN'],
+  'ST':     ['ST','OPEN'],
+  'OBC':    ['OBC','OPEN'],
+  'EWS':    ['EWS','OPEN'],
+  'SEBC':   ['SEBC','OPEN'],
+  'VJ/DT':  ['VJ/DT','OPEN'],
+  'NT1':    ['NT1','OPEN'],
+  'NT2':    ['NT2','OPEN'],
+  'NT3':    ['NT3','OPEN'],
+  'OPEN':   ['OPEN'],
+  'PWD':    ['PWD'],
+  'TFWS':   ['TFWS'],
+  'DEF':    ['DEF'],
+  'ORPHAN': ['ORPHAN'],
+  // 'OTHER' exists in data (311 records) — included when OPEN is selected
+  'OTHER':  ['OTHER','OPEN'],
 };
 
+// BUG FIX: Government-Aided was listed under BOTH 'Government' AND 'Aided' — now separated
 const INST_TYPES_SHORT = {
-  'Government': ['Government Autonomous Home University', 'Government Home University', 'Government-Aided Autonomous Home University'],
-  'Aided': ['Government-Aided Autonomous Home University'],
-  'Un-Aided': ['Un-Aided Autonomous Home University','Un-Aided Home University','Un-Aided Autonomous Linguistic Minority - Gujarathi Home University','Un-Aided Autonomous Linguistic Minority - Gujarathi(Jain) Home University','Un-Aided Autonomous Linguistic Minority - Hindi Home University','Un-Aided Autonomous Linguistic Minority - Malyalam Home University','Un-Aided Autonomous Linguistic Minority - Sindhi Home University','Un-Aided Autonomous Linguistic Minority - Tamil Home University','Un-Aided Autonomous Religious Minority - Christian Home University','Un-Aided Autonomous Religious Minority - Jain Home University','Un-Aided Autonomous Religious Minority - Muslim Home University','Un-Aided Autonomous Religious Minority - Roman Catholics Home University','Un-Aided Linguistic Minority - Gujar Home University','Un-Aided Linguistic Minority - Gujarathi Home University','Un-Aided Linguistic Minority - Hindi Home University','Un-Aided Linguistic Minority - Punjabi Home University','Un-Aided Linguistic Minority - Sindhi Home University','Un-Aided Religious Minority - Christian Home University','Un-Aided Religious Minority - Jain Home University','Un-Aided Religious Minority - Muslim Home University'],
-  'University Dept': ['University Department Home University','University Home University','University Autonomous Home University','University Managed (Un-Aided) Home University','University Managed Autonomous Home University'],
-  'Deemed': ['Deemed University Autonomous Home University']
+  'Government':    ['Government Autonomous Home University', 'Government Home University'],
+  'Govt-Aided':    ['Government-Aided Autonomous Home University'],
+  'Un-Aided':      ['Un-Aided Autonomous Home University','Un-Aided Home University',
+                    'Un-Aided Autonomous Linguistic Minority - Gujarathi Home University',
+                    'Un-Aided Autonomous Linguistic Minority - Gujarathi(Jain) Home University',
+                    'Un-Aided Autonomous Linguistic Minority - Hindi Home University',
+                    'Un-Aided Autonomous Linguistic Minority - Malyalam Home University',
+                    'Un-Aided Autonomous Linguistic Minority - Sindhi Home University',
+                    'Un-Aided Autonomous Linguistic Minority - Tamil Home University',
+                    'Un-Aided Autonomous Religious Minority - Christian Home University',
+                    'Un-Aided Autonomous Religious Minority - Jain Home University',
+                    'Un-Aided Autonomous Religious Minority - Muslim Home University',
+                    'Un-Aided Autonomous Religious Minority - Roman Catholics Home University',
+                    'Un-Aided Linguistic Minority - Gujar Home University',
+                    'Un-Aided Linguistic Minority - Gujarathi Home University',
+                    'Un-Aided Linguistic Minority - Hindi Home University',
+                    'Un-Aided Linguistic Minority - Punjabi Home University',
+                    'Un-Aided Linguistic Minority - Sindhi Home University',
+                    'Un-Aided Religious Minority - Christian Home University',
+                    'Un-Aided Religious Minority - Jain Home University',
+                    'Un-Aided Religious Minority - Muslim Home University'],
+  'University Dept':['University Department Home University','University Home University',
+                    'University Autonomous Home University',
+                    'University Managed (Un-Aided) Home University',
+                    'University Managed Autonomous Home University'],
+  'Deemed':        ['Deemed University Autonomous Home University']
 };
 
 const MH_DISTRICTS = ['Ahmednagar','Akola','Amravati','Aurangabad/Sambhajinagar','Beed','Bhandara','Buldhana','Chandrapur','Dhule','Gadchiroli','Gondia','Hingoli','Jalgaon','Jalna','Kolhapur','Latur','Mumbai City','Mumbai Suburban','Nagpur','Nanded','Nandurbar','Nashik','Osmanabad/Dharashiv','Palghar','Parbhani','Pune','Raigad','Ratnagiri','Sangli','Satara','Sindhudurg','Solapur','Thane','Wardha','Washim','Yavatmal'];
@@ -1531,10 +1555,12 @@ function getChance(gap) {
 }
 function getInstBadge(type) {
   if(!type) return {cls:'badge-pvt',label:'Private'};
-  if(type.startsWith('Government Autonomous') || type.startsWith('Government Home')) return {cls:'badge-govt',label:'Govt'};
-  if(type.startsWith('Government-Aided')) return {cls:'badge-aided',label:'Aided'};
-  if(type.startsWith('University')) return {cls:'badge-aided',label:'Univ.'};
-  if(type.startsWith('Deemed')) return {cls:'badge-pvt',label:'Deemed'};
+  // Order matters: check Government-Aided BEFORE plain Government
+  if(type.startsWith('Government-Aided'))   return {cls:'badge-aided',label:'Govt-Aided'};
+  if(type.startsWith('Government'))         return {cls:'badge-govt', label:'Govt'};
+  if(type.startsWith('University'))         return {cls:'badge-aided',label:'Univ.'};
+  if(type.startsWith('Deemed'))             return {cls:'badge-pvt', label:'Deemed'};
+  if(type.startsWith('Un-Aided'))           return {cls:'badge-pvt', label:'Private'};
   return {cls:'badge-pvt',label:'Private'};
 }
 
