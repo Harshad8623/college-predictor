@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MHT-CET College Predictor 2025-26 | CAP Round 1 | By Harshad Dhuppe</title>
-<meta name="description" content="Advanced Maharashtra MHT-CET College Predictor for CAP Round 1 2025-26. Enter your percentile & category to find eligible engineering colleges across Maharashtra. Built by Harshad Dhuppe, B.Tech ECE, CSMSS College Sambhajinagar.">
-<meta name="keywords" content="MHT-CET College Predictor 2025, Maharashtra CAP Round 1, Engineering Admission Maharashtra, College Cutoff 2025">
-<meta property="og:title" content="MHT-CET College Predictor 2025-26 | CAP Round 1">
-<meta property="og:description" content="Find your eligible engineering colleges based on MHT-CET percentile & category. 34,000+ cutoff records.">
+<title>MHT-CET 2026-27 College Predictor | CAP Round 1 Data 2025-26 | By Harshad Dhuppe</title>
+<meta name="description" content="Advanced MHT-CET 2026-27 Engineering College Predictor for Maharashtra CAP Admission. Based on CAP Round 1 2025-26 official cutoffs. Enter percentile & category to find eligible colleges. Built by Harshad Dhuppe, CSMSS College Sambhajinagar.">
+<meta name="keywords" content="MHT-CET College Predictor 2026, Maharashtra CAP 2026-27, Engineering Admission Maharashtra 2026, College Cutoff 2025-26, DTE Maharashtra">
+<meta property="og:title" content="MHT-CET 2026-27 College Predictor | CAP Round 1 Data">
+<meta property="og:description" content="Predict your college for MHT-CET 2026-27 admission using CAP Round 1 2025-26 cutoff data. 34,000+ records, 368 colleges, all categories.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -617,6 +617,57 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
   cursor:pointer;transition:all 0.15s;margin-bottom:1rem;
 }
 .back-to-search:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+
+/* ═══════════════ VISITOR COUNTER ═══════════════ */
+.visitor-section{
+  max-width:480px;margin:1.5rem auto 0;
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);
+  border-radius:16px;padding:1.25rem;
+  position:relative;overflow:hidden;
+}
+.visitor-section::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(26,143,227,0.06),rgba(255,107,0,0.04));
+  pointer-events:none;
+}
+.visitor-title{
+  font-size:0.72rem;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.visitor-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;
+}
+.visitor-card{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  border-radius:10px;padding:0.9rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.visitor-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+}
+.visitor-card.today-card::after{background:linear-gradient(90deg,var(--sky),var(--sky-l))}
+.visitor-card.total-card::after{background:linear-gradient(90deg,var(--saffron),var(--saffron-l))}
+.visitor-num{
+  font-family:'Baloo 2',cursive;font-size:2rem;font-weight:900;
+  line-height:1;margin-bottom:0.2rem;
+  animation:countPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes countPop{from{transform:scale(0.7);opacity:0}to{transform:scale(1);opacity:1}}
+.visitor-card.today-card .visitor-num{color:var(--sky-l)}
+.visitor-card.total-card .visitor-num{color:var(--saffron-l)}
+.visitor-label{font-size:0.68rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.07em}
+.visitor-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--green-l);margin-right:0.35rem;
+  box-shadow:0 0 8px var(--green-l);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.visitor-note{
+  font-size:0.65rem;color:var(--muted);margin-top:0.75rem;text-align:center;
+  display:flex;align-items:center;justify-content:center;gap:0.3rem;
+}
 </style>
 </head>
 <body>
@@ -632,7 +683,7 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
 <header class="site-header">
   <div class="header-logo">🎓 MHT-CET Predictor</div>
   <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
-    <div class="header-badge">CAP Round 1 · 2025-26</div>
+    <div class="header-badge">MHT-CET 2026-27 · Ref: CAP Round 1 Data 2025-26</div>
     <div class="stats-chips" id="headerStats">
       <span class="stat-chip" id="hcChip">Loading…</span>
     </div>
@@ -641,9 +692,9 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <section class="hero">
-  <div class="hero-pill">Maharashtra Engineering Admission 2025-26</div>
+  <div class="hero-pill">For MHT-CET 2026-27 Admission Reference</div>
   <h1>Advanced College<br>Predictor</h1>
-  <p class="hero-sub">Based on CAP Round 1 official cutoffs · 34,000+ records · All categories</p>
+  <p class="hero-sub">📌 Reference Tool for <strong style="color:var(--white)">MHT-CET 2026-27</strong> Admission &nbsp;·&nbsp; Data: CAP Round 1 · 2025-26 Official Cutoffs &nbsp;·&nbsp; 34,000+ Records</p>
   <div class="hero-stats">
     <div class="hero-stat-item"><div class="hero-stat-num" id="statColleges">368</div><div class="hero-stat-label">Colleges</div></div>
     <div class="hero-stat-item"><div class="hero-stat-num" id="statBranches">103</div><div class="hero-stat-label">Branches</div></div>
@@ -713,6 +764,7 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
       <div>
         <label for="userYear">Exam Year</label>
         <select class="input-field" id="userYear">
+          <option value="2026">MHT-CET 2026</option>
           <option value="2025">MHT-CET 2025</option>
         </select>
       </div>
@@ -727,7 +779,7 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
   <div class="panel">
     <div class="panel-title">Features</div>
     <div class="feature-list">
-      <div class="feature-item"><span class="feature-icon">📊</span><div class="feature-txt"><strong>34,422 Records</strong>All CAP Round 1 2025-26 official cutoffs</div></div>
+      <div class="feature-item"><span class="feature-icon">📊</span><div class="feature-txt"><strong>34,422 Records</strong>CAP Round 1 2025-26 official cutoffs — reference for 2026-27 admission</div></div>
       <div class="feature-item"><span class="feature-icon">🏫</span><div class="feature-txt"><strong>368 Colleges</strong>Across all universities in Maharashtra</div></div>
       <div class="feature-item"><span class="feature-icon">🏷️</span><div class="feature-txt"><strong>15 Categories</strong>OPEN, SC, ST, OBC, EWS, SEBC, NT, VJ, PWD…</div></div>
       <div class="feature-item"><span class="feature-icon">🎓</span><div class="feature-txt"><strong>103 Branches</strong>All engineering disciplines</div></div>
@@ -953,9 +1005,32 @@ td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
     </div>
   </div>
   <div class="disclaimer">
-    ⚠️ <strong>Disclaimer:</strong> This predictor is based on CAP Round 1 2025-26 official cutoff data for reference only. Actual admissions are subject to DTE Maharashtra's official process. Always verify at <strong>cetcell.mahacet.org</strong>
+    ⚠️ <strong>Note:</strong> This tool is a <strong>Reference Predictor for MHT-CET 2026-27 Admission</strong>, based on CAP Round 1 <strong>2025-26</strong> official cutoff data. Actual 2026-27 cutoffs will vary. Always verify at <strong>cetcell.mahacet.org</strong>
   </div>
-  <div class="footer-copy">Built with ❤️ by Harshad Dhuppe · Data: DTE Maharashtra CAP Round 1 2025-26</div>
+
+  <!-- VISITOR COUNTER -->
+  <div class="visitor-section">
+    <div class="visitor-title">
+      <span class="visitor-dot"></span>
+      Website Visitors
+    </div>
+    <div class="visitor-grid">
+      <div class="visitor-card today-card">
+        <div class="visitor-num" id="todayCount">—</div>
+        <div class="visitor-label">📅 Today</div>
+      </div>
+      <div class="visitor-card total-card">
+        <div class="visitor-num" id="totalCount">—</div>
+        <div class="visitor-label">🌍 All Time</div>
+      </div>
+    </div>
+    <div class="visitor-note">
+      <span class="visitor-dot" style="width:5px;height:5px"></span>
+      Live counter · Updates on every visit · By Harshad Dhuppe
+    </div>
+  </div>
+
+  <div class="footer-copy" style="margin-top:1.25rem">Built with ❤️ by <strong style="color:var(--white)">Harshad Madhav Dhuppe</strong> &nbsp;·&nbsp; Data: DTE Maharashtra CAP Round 1 2025-26 &nbsp;·&nbsp; Reference for MHT-CET 2026-27</div>
 </footer>
 
 <!-- ═══════════════ DATA ═══════════════ -->
@@ -1582,9 +1657,71 @@ function showToast(msg) {
 }
 
 // ═══════════════════════════════════════════════════
+//  VISITOR COUNTER
+// ═══════════════════════════════════════════════════
+async function trackVisitor() {
+  // Namespace: unique to this site; key: 'total' for all-time, date for today
+  const NS  = 'harshad-cap-predictor-2026';
+  const today = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+  const BASE = 'https://api.countapi.xyz';
+
+  const fmt = n => n >= 1000000
+    ? (n/1000000).toFixed(1) + 'M'
+    : n >= 1000
+    ? (n/1000).toFixed(1) + 'K'
+    : String(n);
+
+  try {
+    // Hit total counter (increments + returns value)
+    const [totalRes, todayRes] = await Promise.all([
+      fetch(`${BASE}/hit/${NS}/total`),
+      fetch(`${BASE}/hit/${NS}/${today}`)
+    ]);
+    const [totalData, todayData] = await Promise.all([
+      totalRes.json(),
+      todayRes.json()
+    ]);
+
+    const totalEl = document.getElementById('totalCount');
+    const todayEl = document.getElementById('todayCount');
+
+    if(totalEl && totalData.value != null) {
+      animateCount(totalEl, totalData.value, fmt);
+    }
+    if(todayEl && todayData.value != null) {
+      animateCount(todayEl, todayData.value, fmt);
+    }
+  } catch(e) {
+    // Silently fail — counter is non-critical
+    const t = document.getElementById('todayCount');
+    const tot = document.getElementById('totalCount');
+    if(t) t.textContent = '—';
+    if(tot) tot.textContent = '—';
+    console.warn('Visitor counter unavailable:', e);
+  }
+}
+
+function animateCount(el, target, fmt) {
+  const duration = 1200;
+  const start = Date.now();
+  const from = 0;
+  const tick = () => {
+    const elapsed = Date.now() - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.round(from + (target - from) * ease);
+    el.textContent = fmt(current);
+    if(progress < 1) requestAnimationFrame(tick);
+    else el.textContent = fmt(target);
+  };
+  requestAnimationFrame(tick);
+}
+
+// ═══════════════════════════════════════════════════
 //  BOOT
 // ═══════════════════════════════════════════════════
 loadData();
+trackVisitor();
 </script>
 </body>
 </html>
