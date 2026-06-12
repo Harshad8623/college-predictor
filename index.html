@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MHT-CET College Predictor 2025-26 | CAP Round 1 | By Harshad Dhuppe</title>
+<meta name="description" content="Advanced Maharashtra MHT-CET College Predictor for CAP Round 1 2025-26. Enter your percentile & category to find eligible engineering colleges across Maharashtra. Built by Harshad Dhuppe, B.Tech ECE, CSMSS College Sambhajinagar.">
+<meta name="keywords" content="MHT-CET College Predictor 2025, Maharashtra CAP Round 1, Engineering Admission Maharashtra, College Cutoff 2025">
+<meta property="og:title" content="MHT-CET College Predictor 2025-26 | CAP Round 1">
+<meta property="og:description" content="Find your eligible engineering colleges based on MHT-CET percentile & category. 34,000+ cutoff records.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --saffron: #FF6B00;
+  --saffron-l: #FF9240;
+  --navy: #070E1B;
+  --navy-mid: #0D1E38;
+  --navy-card: rgba(13,30,60,0.9);
+  --sky: #1A8FE3;
+  --sky-l: #5BB8FF;
+  --green: #22C55E;
+  --green-l: #4ADE80;
+  --yellow: #FCD34D;
+  --red: #F87171;
+  --white: #EEF3FF;
+  --muted: #7A92BB;
+  --border: rgba(90,140,210,0.2);
+  --border-s: rgba(90,140,210,0.35);
+  --r: 14px;
+  --r-sm: 8px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  background:var(--navy);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 100% 50% at 50% -5%, rgba(26,143,227,0.15) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 95% 85%, rgba(255,107,0,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 5% 60%, rgba(26,143,227,0.06) 0%, transparent 55%);
+}
+/* ═══════════════ LOADING SCREEN ═══════════════ */
+#loadScreen{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem;
+  transition:opacity 0.5s ease,visibility 0.5s ease;
+}
+#loadScreen.hide{opacity:0;visibility:hidden;pointer-events:none}
+.load-logo{
+  font-family:'Baloo 2',cursive;font-size:2rem;font-weight:900;
+  background:linear-gradient(135deg,#fff 30%,var(--sky-l));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.load-bar-wrap{width:240px;height:4px;background:rgba(255,255,255,0.1);border-radius:4px;overflow:hidden}
+.load-bar{height:100%;width:0;background:linear-gradient(90deg,var(--sky),var(--saffron));border-radius:4px;transition:width 0.3s ease}
+.load-txt{font-size:0.8rem;color:var(--muted)}
+
+/* ═══════════════ STICKY HEADER ═══════════════ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,14,27,0.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0.75rem 1rem;
+  display:flex;align-items:center;justify-content:space-between;gap:0.75rem;
+}
+.header-logo{
+  font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;
+  background:linear-gradient(135deg,var(--white),var(--sky-l));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  white-space:nowrap;
+}
+.header-badge{
+  font-size:0.65rem;font-weight:600;letter-spacing:0.1em;
+  background:rgba(255,107,0,0.15);border:1px solid rgba(255,107,0,0.4);
+  color:var(--saffron-l);padding:0.2rem 0.6rem;border-radius:12px;white-space:nowrap;
+}
+.stats-chips{display:flex;gap:0.5rem;flex-wrap:wrap}
+.stat-chip{
+  font-size:0.65rem;font-weight:600;padding:0.2rem 0.5rem;border-radius:10px;
+  background:rgba(26,143,227,0.12);border:1px solid rgba(26,143,227,0.25);color:var(--sky-l);
+  white-space:nowrap;
+}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero{
+  text-align:center;padding:2rem 1rem 1.5rem;position:relative;overflow:hidden;
+}
+.hero-pill{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(255,107,0,0.15),rgba(26,143,227,0.15));
+  border:1px solid rgba(255,107,0,0.3);
+  color:var(--saffron-l);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;padding:0.35rem 1rem;border-radius:20px;margin-bottom:1rem;
+}
+.hero h1{
+  font-family:'Baloo 2',cursive;font-size:clamp(1.7rem,6vw,2.8rem);font-weight:900;line-height:1.1;
+  background:linear-gradient(135deg,#fff 20%,var(--sky-l) 60%,var(--saffron-l));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:0.5rem;
+}
+.hero-sub{color:var(--muted);font-size:0.88rem;font-weight:400;max-width:500px;margin:0 auto 1.25rem}
+.hero-stats{
+  display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+  padding:1rem;background:rgba(255,255,255,0.03);border-radius:var(--r);
+  border:1px solid var(--border);max-width:460px;margin:0 auto;
+}
+.hero-stat-item{text-align:center}
+.hero-stat-num{font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:var(--sky-l)}
+.hero-stat-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em}
+
+/* ═══════════════ STEPS ═══════════════ */
+.steps-nav{
+  display:flex;justify-content:center;gap:0;margin:1.25rem 1rem 0;
+  background:rgba(255,255,255,0.04);border-radius:12px;border:1px solid var(--border);
+  overflow:hidden;
+}
+.step-tab{
+  flex:1;padding:0.65rem 0.25rem;text-align:center;cursor:pointer;
+  font-size:0.7rem;font-weight:600;color:var(--muted);
+  border:none;background:transparent;transition:all 0.2s;
+  display:flex;flex-direction:column;align-items:center;gap:0.2rem;
+  border-right:1px solid var(--border);
+}
+.step-tab:last-child{border-right:none}
+.step-tab.active{background:rgba(26,143,227,0.15);color:var(--white)}
+.step-tab .step-icon{font-size:1rem}
+.step-tab .step-num{
+  width:18px;height:18px;border-radius:50%;font-size:0.6rem;font-weight:700;
+  background:var(--border);display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+}
+.step-tab.active .step-num{background:var(--sky);color:#fff}
+.step-tab.done .step-num{background:var(--green);color:#fff}
+
+/* ═══════════════ MAIN CONTENT ═══════════════ */
+.wrap{max-width:860px;margin:0 auto;padding:0 0.75rem 2rem}
+
+.step-page{display:none;animation:slideIn 0.3s ease}
+.step-page.active{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ═══════════════ PANEL ═══════════════ */
+.panel{
+  background:var(--navy-card);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--border);border-radius:var(--r);padding:1.25rem;
+  box-shadow:var(--shadow);margin-bottom:1rem;
+}
+.panel-title{
+  font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:700;color:var(--sky-l);
+  text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1.1rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.panel-title::before{content:'';display:block;width:3px;height:1.1em;background:var(--saffron);border-radius:2px;flex-shrink:0}
+
+/* ═══════════════ FORM ELEMENTS ═══════════════ */
+label{display:block;font-size:0.72rem;font-weight:600;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;margin-bottom:0.4rem}
+.input-field{
+  width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:0.75rem 1rem;color:var(--white);
+  font-size:0.9rem;font-family:'Inter',sans-serif;outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.input-field:focus{border-color:var(--sky);box-shadow:0 0 0 3px rgba(26,143,227,0.15)}
+.input-field::placeholder{color:var(--muted)}
+.input-field option{background:var(--navy-mid)}
+
+/* TEXT input */
+input[type=text].input-field, input[type=email].input-field{display:block}
+
+/* ═══════════════ PERCENTILE SLIDER ═══════════════ */
+.pct-display{
+  font-family:'Baloo 2',cursive;font-size:3rem;font-weight:900;text-align:center;
+  background:linear-gradient(135deg,var(--sky-l),var(--saffron-l));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin:0.5rem 0;
+}
+.pct-unit{font-size:1rem;font-weight:600;color:var(--muted)}
+.slider-wrap{position:relative;padding:0.5rem 0 1.5rem}
+input[type=range]{
+  width:100%;height:6px;border-radius:3px;outline:none;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+  background:linear-gradient(to right,var(--sky) 0%,var(--saffron) 100%);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:white;box-shadow:0 0 0 4px var(--sky),0 4px 12px rgba(0,0,0,0.4);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;background:white;
+  box-shadow:0 0 0 4px var(--sky);cursor:pointer;border:none;
+}
+.pct-markers{display:flex;justify-content:space-between;font-size:0.65rem;color:var(--muted);margin-top:0.3rem}
+.pct-row{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-top:0.75rem}
+input[type=number]{
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:var(--r-sm);
+  padding:0.65rem 1rem;color:var(--white);font-family:'JetBrains Mono',monospace;
+  font-size:1.1rem;font-weight:600;outline:none;width:100%;text-align:center;
+  transition:border-color 0.2s;
+}
+input[type=number]:focus{border-color:var(--sky)}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+
+/* ═══════════════ CATEGORY PILLS ═══════════════ */
+.cat-grid{display:flex;flex-wrap:wrap;gap:0.45rem}
+.cat-pill{
+  padding:0.45rem 0.9rem;border-radius:20px;border:1.5px solid var(--border);
+  background:rgba(255,255,255,0.03);color:var(--muted);
+  font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.18s;user-select:none;
+  -webkit-user-select:none;
+}
+.cat-pill:active{transform:scale(0.95)}
+.cat-pill:hover{border-color:var(--sky);color:var(--white)}
+.cat-pill.active{background:var(--sky);border-color:var(--sky);color:#fff;box-shadow:0 2px 12px rgba(26,143,227,0.4)}
+.cat-note{margin-top:0.75rem;font-size:0.75rem;color:var(--muted);background:rgba(26,143,227,0.08);border:1px solid rgba(26,143,227,0.2);border-radius:8px;padding:0.6rem 0.8rem;display:flex;gap:0.5rem;align-items:flex-start}
+.cat-note-icon{flex-shrink:0;font-size:0.9rem}
+
+/* ═══════════════ UNIVERSITY SELECTOR ═══════════════ */
+.univ-scroll{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.45rem;
+  max-height:260px;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--navy-mid) transparent;
+  padding-right:0.25rem;
+}
+.univ-card{
+  display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.7rem;
+  border-radius:8px;border:1px solid var(--border);cursor:pointer;
+  transition:all 0.15s;user-select:none;-webkit-user-select:none;
+  background:rgba(255,255,255,0.02);
+}
+.univ-card:active{transform:scale(0.97)}
+.univ-card:hover{background:rgba(26,143,227,0.08);border-color:rgba(26,143,227,0.3)}
+.univ-card.active{background:rgba(26,143,227,0.15);border-color:var(--sky)}
+.univ-checkbox{
+  width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);
+  background:transparent;flex-shrink:0;transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.univ-card.active .univ-checkbox{background:var(--sky);border-color:var(--sky)}
+.univ-card.active .univ-checkbox::after{content:'✓';font-size:0.65rem;color:#fff;font-weight:800}
+.univ-name{font-size:0.75rem;color:var(--muted);line-height:1.3}
+.univ-card.active .univ-name{color:var(--white)}
+.univ-home-badge{
+  font-size:0.6rem;padding:0.1rem 0.35rem;border-radius:4px;
+  background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);
+  color:var(--green-l);white-space:nowrap;flex-shrink:0;
+}
+
+/* ═══════════════ BRANCH SELECTOR ═══════════════ */
+.branch-search-wrap{position:relative;margin-bottom:0.65rem}
+.branch-search-wrap input{padding-left:2rem}
+.search-icon{position:absolute;left:0.7rem;top:50%;transform:translateY(-50%);font-size:0.9rem;pointer-events:none}
+.branch-actions{display:flex;gap:0.4rem;margin-bottom:0.65rem;flex-wrap:wrap}
+.btn-xs{
+  padding:0.3rem 0.65rem;border-radius:6px;font-size:0.72rem;font-weight:600;
+  border:1px solid var(--border);background:rgba(255,255,255,0.05);color:var(--muted);
+  cursor:pointer;transition:all 0.15s;
+}
+.btn-xs:active{transform:scale(0.95)}
+.btn-xs:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+.btn-xs.primary{background:rgba(26,143,227,0.15);border-color:rgba(26,143,227,0.35);color:var(--sky-l)}
+.sel-count{margin-left:auto;font-size:0.72rem;color:var(--muted);align-self:center}
+.branch-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:0.35rem;
+  max-height:240px;overflow-y:auto;padding-right:0.25rem;
+  scrollbar-width:thin;scrollbar-color:var(--navy-mid) transparent;
+}
+.branch-item{
+  display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.6rem;
+  border-radius:7px;cursor:pointer;transition:background 0.15s;
+  user-select:none;-webkit-user-select:none;
+}
+.branch-item:active{transform:scale(0.97)}
+.branch-item:hover{background:rgba(255,255,255,0.06)}
+.branch-item.sel{background:rgba(26,143,227,0.1)}
+.branch-cb{
+  width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);
+  background:transparent;flex-shrink:0;transition:all 0.15s;
+  display:flex;align-items:center;justify-content:center;
+}
+.branch-item.sel .branch-cb{background:var(--sky);border-color:var(--sky)}
+.branch-item.sel .branch-cb::after{content:'✓';font-size:0.6rem;color:#fff;font-weight:900}
+.branch-text{font-size:0.8rem;color:var(--muted)}
+.branch-item.sel .branch-text{color:var(--white)}
+.sel-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-top:0.65rem}
+.sel-tag{
+  background:rgba(26,143,227,0.12);border:1px solid rgba(26,143,227,0.3);
+  color:var(--sky-l);font-size:0.7rem;padding:0.15rem 0.5rem;
+  border-radius:12px;display:flex;align-items:center;gap:0.3rem;
+}
+.sel-tag button{background:none;border:none;color:inherit;cursor:pointer;font-size:0.8rem;line-height:1;padding:0;opacity:0.7}
+.sel-tag button:hover{opacity:1}
+
+/* ═══════════════ COLLEGE FILTER SECTION ═══════════════ */
+.college-filter-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;
+}
+.college-filter-grid select{font-size:0.82rem}
+@media(max-width:480px){.college-filter-grid{grid-template-columns:1fr}}
+
+/* ═══════════════ PREDICT BUTTON ═══════════════ */
+.predict-btn{
+  width:100%;padding:1.1rem 1rem;margin-top:0.25rem;
+  background:linear-gradient(135deg,var(--sky) 0%,#0A6FBB 50%,var(--saffron) 100%);
+  background-size:200% 200%;animation:gradShift 3s ease infinite;
+  border:none;border-radius:var(--r);color:white;
+  font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;letter-spacing:0.04em;
+  cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;
+  box-shadow:0 4px 24px rgba(26,143,227,0.35);display:flex;align-items:center;justify-content:center;gap:0.5rem;
+}
+@keyframes gradShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.predict-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(26,143,227,0.5)}
+.predict-btn:active{transform:translateY(0)}
+
+/* ═══════════════ RESULTS ═══════════════ */
+.results-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem}
+.results-count{font-family:'Baloo 2',cursive;font-size:1rem;font-weight:700}
+.results-count span{color:var(--saffron)}
+.sort-select{
+  background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--white);
+  border-radius:8px;padding:0.4rem 0.7rem;font-size:0.8rem;outline:none;cursor:pointer;
+  font-family:'Inter',sans-serif;
+}
+.sort-select option{background:var(--navy-mid)}
+
+/* FILTER BAR */
+.filter-bar{
+  display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem;
+  padding:0.75rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid var(--border);
+}
+.filter-bar select, .filter-bar input{
+  flex:1;min-width:140px;font-size:0.8rem;
+  background:rgba(255,255,255,0.05);border:1px solid var(--border);
+  color:var(--white);border-radius:7px;padding:0.45rem 0.7rem;outline:none;
+  font-family:'Inter',sans-serif;
+}
+.filter-bar input::placeholder{color:var(--muted)}
+.filter-bar select option{background:var(--navy-mid)}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;border-radius:12px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:0.82rem}
+thead th{
+  background:rgba(26,143,227,0.1);padding:0.8rem 0.75rem;text-align:left;
+  font-size:0.7rem;font-weight:700;color:var(--sky-l);text-transform:uppercase;
+  letter-spacing:0.07em;white-space:nowrap;border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;transition:background 0.15s;
+}
+thead th:hover{background:rgba(26,143,227,0.16)}
+thead th .sort-arrow{margin-left:0.3rem;opacity:0.5;font-size:0.7rem}
+thead th.sorted .sort-arrow{opacity:1;color:var(--saffron)}
+tbody tr{border-bottom:1px solid rgba(90,140,210,0.08);transition:background 0.13s}
+tbody tr:hover{background:rgba(26,143,227,0.05)}
+tbody tr:last-child{border-bottom:none}
+td{padding:0.8rem 0.75rem;vertical-align:middle;line-height:1.35}
+.col-rank{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.85rem;color:var(--muted);width:36px}
+.col-college{font-weight:500;color:var(--white);max-width:220px}
+.col-branch{color:var(--muted);max-width:170px;font-size:0.78rem}
+.col-cutoff{font-family:'Baloo 2',cursive;font-weight:700;white-space:nowrap}
+.col-gap{font-family:'JetBrains Mono',monospace;font-size:0.78rem;white-space:nowrap}
+.col-chance{white-space:nowrap}
+.badge-type{
+  display:inline-block;font-size:0.62rem;font-weight:600;padding:0.12rem 0.4rem;
+  border-radius:4px;margin-top:0.2rem;
+}
+.badge-govt{background:rgba(34,197,94,0.15);color:var(--green-l);border:1px solid rgba(34,197,94,0.2)}
+.badge-aided{background:rgba(251,191,36,0.15);color:var(--yellow);border:1px solid rgba(251,191,36,0.2)}
+.badge-pvt{background:rgba(148,163,184,0.15);color:#94A3B8;border:1px solid rgba(148,163,184,0.2)}
+
+.chance-badge{display:inline-block;padding:0.22rem 0.55rem;border-radius:20px;font-size:0.7rem;font-weight:700;white-space:nowrap}
+.chance-safe{background:rgba(34,197,94,0.15);color:var(--green-l);border:1px solid rgba(34,197,94,0.25)}
+.chance-good{background:rgba(91,184,255,0.15);color:var(--sky-l);border:1px solid rgba(91,184,255,0.25)}
+.chance-border{background:rgba(252,211,77,0.15);color:var(--yellow);border:1px solid rgba(252,211,77,0.25)}
+.chance-tough{background:rgba(255,107,0,0.15);color:var(--saffron-l);border:1px solid rgba(255,107,0,0.25)}
+.college-code{font-size:0.65rem;color:var(--muted);font-family:'JetBrains Mono',monospace}
+
+/* PAGINATION */
+.pagination{display:flex;justify-content:center;align-items:center;gap:0.4rem;margin-top:1rem;flex-wrap:wrap}
+.pg-btn{
+  padding:0.4rem 0.7rem;border-radius:7px;font-size:0.78rem;font-weight:600;
+  border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--muted);
+  cursor:pointer;transition:all 0.15s;
+}
+.pg-btn:hover{background:rgba(26,143,227,0.12);color:var(--white)}
+.pg-btn.active{background:var(--sky);border-color:var(--sky);color:#fff}
+.pg-btn:disabled{opacity:0.4;cursor:not-allowed}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:3rem 1.5rem}
+.empty-icon{font-size:2.5rem;margin-bottom:0.75rem}
+.empty-state h3{font-family:'Baloo 2',cursive;font-size:1.1rem;color:var(--white);margin-bottom:0.4rem}
+.empty-state p{font-size:0.82rem;color:var(--muted)}
+
+/* ═══════════════ DETAIL MODAL ═══════════════ */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(7,14,27,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;visibility:hidden;transition:all 0.25s;
+}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal{
+  width:100%;max-width:540px;max-height:85vh;overflow-y:auto;
+  background:var(--navy-mid);border-radius:20px 20px 0 0;
+  border:1px solid var(--border);border-bottom:none;
+  padding:1.5rem;
+  transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.modal-overlay.open .modal{transform:translateY(0)}
+@media(min-width:640px){
+  .modal-overlay{align-items:center}
+  .modal{border-radius:20px;border-bottom:1px solid var(--border);max-height:80vh}
+}
+.modal-handle{width:36px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px;margin:0 auto 1.25rem;display:block}
+.modal-title{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;margin-bottom:0.35rem}
+.modal-sub{font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-bottom:1.25rem}
+.detail-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:0.75rem}
+.detail-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.25rem}
+.detail-val{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:700;color:var(--white)}
+.modal-close{
+  position:absolute;top:1rem;right:1rem;
+  background:rgba(255,255,255,0.08);border:1px solid var(--border);
+  color:var(--muted);border-radius:50%;width:32px;height:32px;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:1rem;transition:all 0.15s;
+}
+.modal-close:hover{background:rgba(255,255,255,0.15);color:var(--white)}
+.modal-wrap{position:relative}
+
+/* CHANCE METER */
+.chance-meter{margin-top:0.75rem}
+.chance-meter-label{font-size:0.72rem;color:var(--muted);margin-bottom:0.4rem}
+.chance-bar-wrap{height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden}
+.chance-bar-fill{height:100%;border-radius:4px;transition:width 0.6s ease}
+.cat-breakdown{margin-top:1rem}
+.cat-breakdown-title{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem}
+.cat-row{display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.cat-row:last-child{border-bottom:none}
+.cat-row-name{font-size:0.75rem;color:var(--muted);width:60px;flex-shrink:0}
+.cat-row-bar{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden}
+.cat-row-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--sky),var(--saffron))}
+.cat-row-val{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--white);width:40px;text-align:right;flex-shrink:0}
+
+/* ═══════════════ SUMMARY CARD ═══════════════ */
+.summary-panel{
+  background:linear-gradient(135deg,rgba(26,143,227,0.1),rgba(255,107,0,0.08));
+  border:1px solid var(--border-s);border-radius:var(--r);padding:1.25rem;margin-bottom:1rem;
+}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;text-align:center;margin-top:0.75rem}
+.sum-item-num{font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800}
+.sum-item-label{font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em}
+.sum-green{color:var(--green-l)}
+.sum-yellow{color:var(--yellow)}
+.sum-blue{color:var(--sky-l)}
+
+/* ═══════════════ EXPORT BUTTON ═══════════════ */
+.export-row{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.export-btn{
+  padding:0.5rem 0.9rem;border-radius:8px;font-size:0.78rem;font-weight:600;
+  border:1px solid var(--border-s);background:rgba(255,255,255,0.05);color:var(--muted);
+  cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:0.35rem;
+}
+.export-btn:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+.export-btn.pdf{color:var(--red);border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.06)}
+.export-btn.csv{color:var(--green-l);border-color:rgba(34,197,94,0.25);background:rgba(34,197,94,0.06)}
+
+/* ═══════════════ NAVIGATION ARROWS ═══════════════ */
+.nav-row{display:flex;justify-content:space-between;gap:0.75rem;margin-top:1.25rem}
+.nav-btn{
+  flex:1;padding:0.8rem 1rem;border-radius:10px;font-size:0.9rem;font-weight:600;
+  border:1px solid var(--border-s);cursor:pointer;transition:all 0.18s;
+  display:flex;align-items:center;justify-content:center;gap:0.4rem;
+}
+.nav-btn.back{background:rgba(255,255,255,0.05);color:var(--muted)}
+.nav-btn.back:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+.nav-btn.next{background:var(--sky);border-color:var(--sky);color:#fff;font-family:'Baloo 2',cursive;font-weight:700}
+.nav-btn.next:hover{background:#1580CC;box-shadow:0 4px 16px rgba(26,143,227,0.4)}
+
+/* ═══════════════ TOAST ═══════════════ */
+.toast{
+  position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%) translateY(100px);
+  background:rgba(13,30,60,0.95);border:1px solid var(--border-s);
+  color:var(--white);padding:0.65rem 1.25rem;border-radius:20px;font-size:0.82rem;
+  z-index:9000;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);white-space:nowrap;
+  backdrop-filter:blur(8px);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ═══════════════ FOOTER ═══════════════ */
+.footer{
+  background:rgba(7,14,27,0.95);border-top:1px solid var(--border);
+  padding:2.5rem 1rem 2rem;text-align:center;
+  background-image:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(26,143,227,0.07) 0%,transparent 70%);
+}
+.creator-card{
+  max-width:480px;margin:0 auto;
+  background:var(--navy-card);border:1px solid var(--border-s);
+  border-radius:20px;padding:1.75rem;box-shadow:0 8px 40px rgba(0,0,0,0.4);
+}
+.creator-photo{
+  width:90px;height:90px;border-radius:50%;
+  border:3px solid var(--sky);object-fit:cover;object-position:center top;
+  box-shadow:0 0 24px rgba(26,143,227,0.35);margin-bottom:0.75rem;
+}
+.creator-name{
+  font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:900;
+  background:linear-gradient(135deg,var(--white),var(--sky-l),var(--saffron-l));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.creator-role{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(255,107,0,0.2),rgba(26,143,227,0.2));
+  border:1px solid rgba(255,107,0,0.4);color:var(--saffron-l);
+  font-size:0.75rem;font-weight:700;padding:0.3rem 0.9rem;border-radius:20px;
+  margin:0.4rem 0;text-transform:uppercase;letter-spacing:0.08em;
+}
+.creator-college{font-size:0.8rem;color:var(--muted);margin-bottom:1rem;line-height:1.5}
+.creator-college strong{color:var(--white)}
+.social-links{display:flex;justify-content:center;gap:0.75rem;flex-wrap:wrap;margin-top:1rem}
+.social-link{
+  display:flex;align-items:center;gap:0.4rem;padding:0.5rem 0.9rem;
+  border-radius:20px;font-size:0.78rem;font-weight:600;text-decoration:none;
+  transition:all 0.18s;
+}
+.social-link.email{background:rgba(248,113,113,0.12);border:1px solid rgba(248,113,113,0.25);color:var(--red)}
+.social-link.email:hover{background:rgba(248,113,113,0.2)}
+.social-link.linkedin{background:rgba(10,102,194,0.15);border:1px solid rgba(10,102,194,0.35);color:#5BA4CF}
+.social-link.linkedin:hover{background:rgba(10,102,194,0.25)}
+.footer-copy{margin-top:1.5rem;font-size:0.7rem;color:var(--muted)}
+.disclaimer{
+  max-width:480px;margin:1rem auto 0;font-size:0.7rem;color:var(--muted);
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:0.6rem 0.85rem;
+}
+
+/* ═══════════════ MOBILE BOTTOM NAV ═══════════════ */
+.mobile-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;
+  background:rgba(7,14,27,0.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  display:flex;
+}
+.mob-nav-btn{
+  flex:1;padding:0.7rem 0.25rem 0.9rem;display:flex;flex-direction:column;
+  align-items:center;gap:0.2rem;background:none;border:none;cursor:pointer;
+  color:var(--muted);font-size:0.6rem;font-weight:600;letter-spacing:0.04em;
+  transition:color 0.15s;
+}
+.mob-nav-btn .icon{font-size:1.3rem}
+.mob-nav-btn.active{color:var(--sky-l)}
+@media(min-width:640px){.mobile-nav{display:none!important}}
+
+/* BODY PADDING for mobile nav */
+@media(max-width:639px){body{padding-bottom:65px}}
+
+/* ═══════════════ WELCOME SCREEN ═══════════════ */
+#step-0 .welcome-title{
+  font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,5vw,2rem);font-weight:900;
+  background:linear-gradient(135deg,var(--white),var(--sky-l));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:0.75rem;
+}
+.feature-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:0.65rem;margin:1rem 0}
+.feature-item{
+  background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;
+  padding:0.85rem;display:flex;align-items:flex-start;gap:0.6rem;
+}
+.feature-icon{font-size:1.3rem;flex-shrink:0}
+.feature-txt{font-size:0.78rem;color:var(--muted);line-height:1.4}
+.feature-txt strong{display:block;color:var(--white);font-size:0.82rem;margin-bottom:0.1rem}
+
+/* ═══════════════ SCROLLBAR ═══════════════ */
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(90,140,210,0.3);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(90,140,210,0.5)}
+
+/* ═══════════════ BREAKPOINTS ═══════════════ */
+@media(max-width:640px){
+  .pct-row{grid-template-columns:1fr}
+  .branch-grid{grid-template-columns:1fr 1fr}
+  .detail-grid{grid-template-columns:1fr 1fr}
+  .summary-grid{grid-template-columns:1fr 1fr 1fr}
+  thead th:nth-child(4),td:nth-child(4){display:none}
+  .hero h1{font-size:1.7rem}
+  .steps-nav .step-tab span:not(.step-num){display:none}
+}
+@media(max-width:400px){
+  .branch-grid{grid-template-columns:1fr}
+  .detail-grid{grid-template-columns:1fr}
+}
+
+/* ═══════════════ PROGRESS RINGS ═══════════════ */
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:0.35rem;flex:1}
+.ring-label{font-size:0.65rem;color:var(--muted);text-align:center}
+.ring-svg circle{transition:stroke-dashoffset 0.8s cubic-bezier(0.34,1.56,0.64,1)}
+
+/* animate numbers */
+.count-up{transition:all 0.5s}
+
+/* highlight row */
+@keyframes rowHL{0%{background:rgba(26,143,227,0.2)}100%{background:transparent}}
+.row-hl{animation:rowHL 1.5s ease}
+
+/* Results back button */
+.back-to-search{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.5rem 0.9rem;border-radius:20px;font-size:0.78rem;font-weight:600;
+  background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--muted);
+  cursor:pointer;transition:all 0.15s;margin-bottom:1rem;
+}
+.back-to-search:hover{background:rgba(255,255,255,0.1);color:var(--white)}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ LOADING SCREEN ═══════════════ -->
+<div id="loadScreen">
+  <div class="load-logo">🎯 CAP Predictor</div>
+  <div class="load-bar-wrap"><div class="load-bar" id="loadBar"></div></div>
+  <div class="load-txt" id="loadTxt">Loading cutoff data…</div>
+</div>
+
+<!-- ═══════════════ STICKY HEADER ═══════════════ -->
+<header class="site-header">
+  <div class="header-logo">🎓 MHT-CET Predictor</div>
+  <div style="display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap">
+    <div class="header-badge">CAP Round 1 · 2025-26</div>
+    <div class="stats-chips" id="headerStats">
+      <span class="stat-chip" id="hcChip">Loading…</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-pill">Maharashtra Engineering Admission 2025-26</div>
+  <h1>Advanced College<br>Predictor</h1>
+  <p class="hero-sub">Based on CAP Round 1 official cutoffs · 34,000+ records · All categories</p>
+  <div class="hero-stats">
+    <div class="hero-stat-item"><div class="hero-stat-num" id="statColleges">368</div><div class="hero-stat-label">Colleges</div></div>
+    <div class="hero-stat-item"><div class="hero-stat-num" id="statBranches">103</div><div class="hero-stat-label">Branches</div></div>
+    <div class="hero-stat-item"><div class="hero-stat-num" id="statRecords">34K+</div><div class="hero-stat-label">Cutoff Records</div></div>
+    <div class="hero-stat-item"><div class="hero-stat-num" id="statUnivs">14</div><div class="hero-stat-label">Universities</div></div>
+  </div>
+</section>
+
+<!-- ═══════════════ STEP TABS ═══════════════ -->
+<div class="steps-nav" id="stepsNav">
+  <button class="step-tab active" onclick="goToStep(0)" id="tab-0">
+    <span class="step-num">1</span>
+    <span class="step-icon">👤</span>
+    <span>Details</span>
+  </button>
+  <button class="step-tab" onclick="goToStep(1)" id="tab-1">
+    <span class="step-num">2</span>
+    <span class="step-icon">🎯</span>
+    <span>Percentile</span>
+  </button>
+  <button class="step-tab" onclick="goToStep(2)" id="tab-2">
+    <span class="step-num">3</span>
+    <span class="step-icon">🏛️</span>
+    <span>University</span>
+  </button>
+  <button class="step-tab" onclick="goToStep(3)" id="tab-3">
+    <span class="step-num">4</span>
+    <span class="step-icon">📚</span>
+    <span>Branches</span>
+  </button>
+  <button class="step-tab" onclick="goToStep(4)" id="tab-4">
+    <span class="step-num">5</span>
+    <span class="step-icon">🏆</span>
+    <span>Results</span>
+  </button>
+</div>
+
+<!-- ═══════════════ MAIN WRAP ═══════════════ -->
+<div class="wrap">
+
+<!-- ═══ STEP 0: USER DETAILS ═══ -->
+<div class="step-page active" id="step-0">
+  <div class="panel" style="margin-top:1rem">
+    <div class="panel-title">Student Information</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem">
+      <div>
+        <label for="userName">Full Name</label>
+        <input type="text" class="input-field" id="userName" placeholder="Enter your name">
+      </div>
+      <div>
+        <label for="userPhone">Mobile Number</label>
+        <input type="text" class="input-field" id="userPhone" placeholder="+91 XXXXXXXXXX">
+      </div>
+      <div>
+        <label for="userEmail">Email Address</label>
+        <input type="text" class="input-field" id="userEmail" placeholder="your@email.com">
+      </div>
+      <div>
+        <label for="userGender">Gender</label>
+        <select class="input-field" id="userGender">
+          <option value="">Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other / Prefer not to say</option>
+        </select>
+      </div>
+      <div>
+        <label for="userYear">Exam Year</label>
+        <select class="input-field" id="userYear">
+          <option value="2025">MHT-CET 2025</option>
+        </select>
+      </div>
+      <div>
+        <label for="userDistrict">Home District</label>
+        <select class="input-field" id="userDistrict">
+          <option value="">Select District</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Features</div>
+    <div class="feature-list">
+      <div class="feature-item"><span class="feature-icon">📊</span><div class="feature-txt"><strong>34,422 Records</strong>All CAP Round 1 2025-26 official cutoffs</div></div>
+      <div class="feature-item"><span class="feature-icon">🏫</span><div class="feature-txt"><strong>368 Colleges</strong>Across all universities in Maharashtra</div></div>
+      <div class="feature-item"><span class="feature-icon">🏷️</span><div class="feature-txt"><strong>15 Categories</strong>OPEN, SC, ST, OBC, EWS, SEBC, NT, VJ, PWD…</div></div>
+      <div class="feature-item"><span class="feature-icon">🎓</span><div class="feature-txt"><strong>103 Branches</strong>All engineering disciplines</div></div>
+      <div class="feature-item"><span class="feature-icon">🏛️</span><div class="feature-txt"><strong>14 Universities</strong>Filter by Home University</div></div>
+      <div class="feature-item"><span class="feature-icon">📥</span><div class="feature-txt"><strong>Export Results</strong>Download as CSV for offline use</div></div>
+    </div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn next" onclick="goToStep(1)">Next: Enter Percentile →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 1: PERCENTILE & CATEGORY ═══ -->
+<div class="step-page" id="step-1">
+  <div class="panel" style="margin-top:1rem">
+    <div class="panel-title">MHT-CET Percentile</div>
+    <div class="pct-display" id="pctDisplay">90.00<span class="pct-unit">%ile</span></div>
+    <div class="slider-wrap">
+      <input type="range" id="pctSlider" min="0" max="100" step="0.01" value="90" oninput="onSlider(this.value)">
+      <div class="pct-markers"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+    </div>
+    <div class="pct-row">
+      <div>
+        <label>Type Exact Percentile</label>
+        <input type="number" id="pctInput" min="0" max="100" step="0.01" value="90" oninput="onPctInput(this.value)">
+      </div>
+      <div>
+        <label>Buffer / Margin (±)</label>
+        <input type="number" id="bufferInput" min="0" max="20" step="0.5" value="0" title="Add buffer to show colleges within this margin above your percentile">
+      </div>
+    </div>
+    <div style="margin-top:0.5rem;font-size:0.72rem;color:var(--muted)">💡 Buffer: also shows colleges with cutoff slightly above your percentile — helpful for aspirational choices</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Your Category</div>
+    <div class="cat-grid" id="catGrid"></div>
+    <div class="cat-note" id="catNote" style="display:none">
+      <span class="cat-note-icon">ℹ️</span>
+      <span id="catNoteText"></span>
+    </div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn back" onclick="goToStep(0)">← Back</button>
+    <button class="nav-btn next" onclick="goToStep(2)">Next: Select University →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 2: UNIVERSITY ═══ -->
+<div class="step-page" id="step-2">
+  <div class="panel" style="margin-top:1rem">
+    <div class="panel-title">Home University</div>
+    <div style="margin-bottom:0.65rem;font-size:0.78rem;color:var(--muted)">Select your home university (affects eligibility for some seats)</div>
+    <div id="homeUnivGrid" class="univ-scroll" style="max-height:200px;grid-template-columns:1fr"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Preferred Universities / Regions</div>
+    <div style="margin-bottom:0.65rem;font-size:0.78rem;color:var(--muted)">Select universities whose colleges you want to explore (multi-select)</div>
+    <div class="branch-actions">
+      <button class="btn-xs" onclick="selectAllUnivs()">Select All</button>
+      <button class="btn-xs" onclick="clearUnivs()">Clear</button>
+      <span class="sel-count" id="univSelCount">0 selected</span>
+    </div>
+    <div id="univGrid" class="univ-scroll"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Institution Type Filter</div>
+    <div class="cat-grid" id="instTypeGrid"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn back" onclick="goToStep(1)">← Back</button>
+    <button class="nav-btn next" onclick="goToStep(3)">Next: Select Branches →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 3: BRANCHES ═══ -->
+<div class="step-page" id="step-3">
+  <div class="panel" style="margin-top:1rem">
+    <div class="panel-title">Select Branches / Courses</div>
+    <div class="branch-search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="input-field" id="branchSearch" placeholder="Search branch name…" oninput="filterBranches(this.value)">
+    </div>
+    <div class="branch-actions">
+      <button class="btn-xs primary" onclick="selectAllBranches()">✓ Select All</button>
+      <button class="btn-xs" onclick="clearBranches()">✕ Clear</button>
+      <button class="btn-xs" onclick="selectCSBranches()">💻 CS/IT</button>
+      <button class="btn-xs" onclick="selectECBranches()">📡 EC/EE</button>
+      <span class="sel-count" id="selBranchCount">0 selected</span>
+    </div>
+    <div id="branchGrid" class="branch-grid"></div>
+    <div id="selTags" class="sel-tags"></div>
+  </div>
+
+  <div class="nav-row">
+    <button class="nav-btn back" onclick="goToStep(2)">← Back</button>
+    <button class="predict-btn" id="predictBtn" onclick="doSearch()">
+      🎯 Predict My Colleges
+    </button>
+  </div>
+</div>
+
+<!-- ═══ STEP 4: RESULTS ═══ -->
+<div class="step-page" id="step-4">
+  <div style="margin-top:1rem">
+    <button class="back-to-search" onclick="goToStep(3)">← Modify Search</button>
+
+    <!-- User Summary -->
+    <div class="summary-panel" id="userSummary"></div>
+
+    <!-- Export Row -->
+    <div class="export-row">
+      <button class="export-btn csv" onclick="exportCSV()">⬇ Export CSV</button>
+      <button class="export-btn" onclick="printResults()">🖨 Print / PDF</button>
+      <button class="export-btn" onclick="shareResults()">📤 Share</button>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <input type="text" id="resCollegeSearch" placeholder="🔍 Search college…" oninput="applyResultFilters()">
+      <select id="resSort" onchange="applyResultFilters()">
+        <option value="cutoff_desc">Cutoff: High → Low</option>
+        <option value="cutoff_asc">Cutoff: Low → High</option>
+        <option value="gap_asc">Safest First</option>
+        <option value="name_asc">College A–Z</option>
+        <option value="branch_asc">Branch A–Z</option>
+      </select>
+      <select id="resBranchFilter" onchange="applyResultFilters()">
+        <option value="">All Branches</option>
+      </select>
+      <select id="resCatFilter" onchange="applyResultFilters()">
+        <option value="">All Categories</option>
+      </select>
+      <select id="resChanceFilter" onchange="applyResultFilters()">
+        <option value="">All Chances</option>
+        <option value="safe">✅ Safe</option>
+        <option value="good">🟢 Good</option>
+        <option value="border">🟡 Borderline</option>
+        <option value="tough">🔴 Tough</option>
+      </select>
+    </div>
+
+    <!-- Results panel -->
+    <div class="panel" id="resultsPanel">
+      <div class="results-header">
+        <div class="results-count" id="resultsCount"></div>
+        <div id="pgInfo" style="font-size:0.75rem;color:var(--muted)"></div>
+      </div>
+      <div class="table-wrap">
+        <table id="resultsTable">
+          <thead>
+            <tr>
+              <th class="col-rank">#</th>
+              <th onclick="setSortCol('college')">College <span class="sort-arrow" id="sa-college">↕</span></th>
+              <th onclick="setSortCol('branch')">Branch <span class="sort-arrow" id="sa-branch">↕</span></th>
+              <th onclick="setSortCol('catGroup')">Category <span class="sort-arrow" id="sa-catGroup">↕</span></th>
+              <th onclick="setSortCol('cutoff')">Cutoff <span class="sort-arrow" id="sa-cutoff">↕</span></th>
+              <th onclick="setSortCol('gap')">Gap <span class="sort-arrow" id="sa-gap">↕</span></th>
+              <th>Chance</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+    <div class="panel" id="emptyState" style="display:none">
+      <div class="empty-state">
+        <div class="empty-icon">😕</div>
+        <h3>No colleges found</h3>
+        <p>Try adjusting your percentile, adding buffer, selecting more branches, or choosing different categories.</p>
+        <button class="nav-btn next" style="max-width:200px;margin:1rem auto 0" onclick="goToStep(3)">← Modify Search</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- ═══════════════ DETAIL MODAL ═══════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal modal-wrap" id="modalContent">
+    <span class="modal-handle"></span>
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════ MOBILE BOTTOM NAV ═══════════════ -->
+<nav class="mobile-nav" id="mobileNav">
+  <button class="mob-nav-btn active" id="mbn-0" onclick="goToStep(0)"><span class="icon">👤</span>Details</button>
+  <button class="mob-nav-btn" id="mbn-1" onclick="goToStep(1)"><span class="icon">🎯</span>Percentile</button>
+  <button class="mob-nav-btn" id="mbn-2" onclick="goToStep(2)"><span class="icon">🏛️</span>University</button>
+  <button class="mob-nav-btn" id="mbn-3" onclick="goToStep(3)"><span class="icon">📚</span>Branches</button>
+  <button class="mob-nav-btn" id="mbn-4" onclick="goToStep(4)"><span class="icon">🏆</span>Results</button>
+</nav>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="creator-card">
+    <img src="photo.png" alt="Harshad Dhuppe" class="creator-photo" onerror="this.style.display='none'">
+    <div class="creator-name">Harshad Madhav Dhuppe</div>
+    <div class="creator-role">🎓 B.Tech Third Year Student</div>
+    <div class="creator-college">
+      <strong>CSMSS Chh. Shahu College of Engineering</strong><br>
+      Sambhajinagar (Aurangabad), Maharashtra
+    </div>
+    <div style="display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-bottom:0.75rem">
+      <span style="font-size:0.72rem;color:var(--muted);background:rgba(255,255,255,0.05);padding:0.25rem 0.7rem;border-radius:12px;border:1px solid var(--border)">Electronics & Computer Engineering</span>
+      <span style="font-size:0.72rem;color:var(--muted);background:rgba(255,255,255,0.05);padding:0.25rem 0.7rem;border-radius:12px;border:1px solid var(--border)">AI & ML Enthusiast</span>
+    </div>
+    <div class="social-links">
+      <a href="mailto:dhuppeh@gmail.com" class="social-link email">✉️ dhuppeh@gmail.com</a>
+      <a href="https://www.linkedin.com/in/harshad-dhuppe-b352ab253" target="_blank" rel="noopener" class="social-link linkedin">💼 LinkedIn</a>
+    </div>
+  </div>
+  <div class="disclaimer">
+    ⚠️ <strong>Disclaimer:</strong> This predictor is based on CAP Round 1 2025-26 official cutoff data for reference only. Actual admissions are subject to DTE Maharashtra's official process. Always verify at <strong>cetcell.mahacet.org</strong>
+  </div>
+  <div class="footer-copy">Built with ❤️ by Harshad Dhuppe · Data: DTE Maharashtra CAP Round 1 2025-26</div>
+</footer>
+
+<!-- ═══════════════ DATA ═══════════════ -->
+<script src="data_compact.json" type="application/json" id="dataScript"></script>
+<script>
+// ═══════════════════════════════════════════════════
+//  GLOBAL STATE
+// ═══════════════════════════════════════════════════
+let DB = {colleges:[], branches:[], univs:[], records:[]};
+let STATE = {
+  step: 0,
+  name:'', email:'', phone:'', gender:'', district:'',
+  percentile: 90,
+  buffer: 0,
+  categories: [],
+  homeUniv: '',
+  selUnivs: [],
+  instTypes: [],
+  selBranches: [],
+  results: [],
+  filteredResults: [],
+  page: 1,
+  pageSize: 25,
+  sortCol: 'gap',
+  sortDir: 'asc'
+};
+
+const CATEGORIES = [
+  {id:'OPEN',label:'OPEN',desc:'Open / General'},
+  {id:'SC',label:'SC',desc:'Scheduled Caste'},
+  {id:'ST',label:'ST',desc:'Scheduled Tribe'},
+  {id:'OBC',label:'OBC',desc:'Other Backward Class'},
+  {id:'EWS',label:'EWS',desc:'Economically Weaker Section'},
+  {id:'SEBC',label:'SEBC',desc:'Socially & Educationally Backward Class'},
+  {id:'VJ/DT',label:'VJ/DT',desc:'Vimukta Jati / Denotified Tribes'},
+  {id:'NT1',label:'NT-1',desc:'Nomadic Tribes 1 (B)'},
+  {id:'NT2',label:'NT-2',desc:'Nomadic Tribes 2 (C)'},
+  {id:'NT3',label:'NT-3',desc:'Nomadic Tribes 3 (D)'},
+  {id:'PWD',label:'PWD',desc:'Person With Disability'},
+  {id:'TFWS',label:'TFWS',desc:'Tuition Fee Waiver Scheme'},
+  {id:'DEF',label:'DEF',desc:'Defence'},
+  {id:'ORPHAN',label:'Orphan',desc:'Orphan Candidates'},
+];
+
+const CAT_ELIGIBILITY = {
+  'SC':    ['SC','OPEN'],
+  'ST':    ['ST','OPEN'],
+  'OBC':   ['OBC','OPEN'],
+  'EWS':   ['EWS','OPEN'],
+  'SEBC':  ['SEBC','OPEN'],
+  'VJ/DT': ['VJ/DT','OPEN'],
+  'NT1':   ['NT1','OPEN'],
+  'NT2':   ['NT2','OPEN'],
+  'NT3':   ['NT3','OPEN'],
+  'OPEN':  ['OPEN'],
+  'PWD':   ['PWD'],
+  'TFWS':  ['TFWS'],
+  'DEF':   ['DEF'],
+  'ORPHAN':['ORPHAN'],
+};
+
+const INST_TYPES_SHORT = {
+  'Government': ['Government Autonomous Home University', 'Government Home University', 'Government-Aided Autonomous Home University'],
+  'Aided': ['Government-Aided Autonomous Home University'],
+  'Un-Aided': ['Un-Aided Autonomous Home University','Un-Aided Home University','Un-Aided Autonomous Linguistic Minority - Gujarathi Home University','Un-Aided Autonomous Linguistic Minority - Gujarathi(Jain) Home University','Un-Aided Autonomous Linguistic Minority - Hindi Home University','Un-Aided Autonomous Linguistic Minority - Malyalam Home University','Un-Aided Autonomous Linguistic Minority - Sindhi Home University','Un-Aided Autonomous Linguistic Minority - Tamil Home University','Un-Aided Autonomous Religious Minority - Christian Home University','Un-Aided Autonomous Religious Minority - Jain Home University','Un-Aided Autonomous Religious Minority - Muslim Home University','Un-Aided Autonomous Religious Minority - Roman Catholics Home University','Un-Aided Linguistic Minority - Gujar Home University','Un-Aided Linguistic Minority - Gujarathi Home University','Un-Aided Linguistic Minority - Hindi Home University','Un-Aided Linguistic Minority - Punjabi Home University','Un-Aided Linguistic Minority - Sindhi Home University','Un-Aided Religious Minority - Christian Home University','Un-Aided Religious Minority - Jain Home University','Un-Aided Religious Minority - Muslim Home University'],
+  'University Dept': ['University Department Home University','University Home University','University Autonomous Home University','University Managed (Un-Aided) Home University','University Managed Autonomous Home University'],
+  'Deemed': ['Deemed University Autonomous Home University']
+};
+
+const MH_DISTRICTS = ['Ahmednagar','Akola','Amravati','Aurangabad/Sambhajinagar','Beed','Bhandara','Buldhana','Chandrapur','Dhule','Gadchiroli','Gondia','Hingoli','Jalgaon','Jalna','Kolhapur','Latur','Mumbai City','Mumbai Suburban','Nagpur','Nanded','Nandurbar','Nashik','Osmanabad/Dharashiv','Palghar','Parbhani','Pune','Raigad','Ratnagiri','Sangli','Satara','Sindhudurg','Solapur','Thane','Wardha','Washim','Yavatmal'];
+
+const CS_KEYWORDS = ['Computer','Software','Information','Data Science','Artificial Intelligence','AI','Machine Learning','Cyber','IoT'];
+const EC_KEYWORDS = ['Electronics','Electrical','Communication','Signal','Instrumentation','5G'];
+
+// ═══════════════════════════════════════════════════
+//  LOAD DATA
+// ═══════════════════════════════════════════════════
+async function loadData() {
+  const bar = document.getElementById('loadBar');
+  const txt = document.getElementById('loadTxt');
+  try {
+    bar.style.width = '20%';
+    txt.textContent = 'Fetching cutoff database…';
+    const res = await fetch('data_compact.json');
+    bar.style.width = '60%';
+    txt.textContent = 'Parsing 34,000+ records…';
+    DB = await res.json();
+    bar.style.width = '90%';
+    txt.textContent = 'Initializing predictor…';
+    await new Promise(r => setTimeout(r,200));
+    initApp();
+    bar.style.width = '100%';
+    await new Promise(r => setTimeout(r,300));
+    document.getElementById('loadScreen').classList.add('hide');
+    document.getElementById('hcChip').textContent = DB.colleges.length + ' Colleges';
+  } catch(e) {
+    txt.textContent = '❌ Failed to load data. Please refresh.';
+    console.error(e);
+  }
+}
+
+function initApp() {
+  // Districts
+  const dSel = document.getElementById('userDistrict');
+  MH_DISTRICTS.forEach(d => { const o = document.createElement('option'); o.value = d; o.textContent = d; dSel.appendChild(o); });
+  
+  // Categories
+  const catGrid = document.getElementById('catGrid');
+  CATEGORIES.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'cat-pill';
+    el.textContent = c.label;
+    el.dataset.id = c.id;
+    el.title = c.desc;
+    el.onclick = () => toggleCat(c.id, el);
+    catGrid.appendChild(el);
+  });
+
+  // Home University
+  const hg = document.getElementById('homeUnivGrid');
+  DB.univs.forEach(u => {
+    const el = document.createElement('div');
+    el.className = 'univ-card';
+    el.innerHTML = `<div class="univ-checkbox"></div><div class="univ-name">${u}</div>`;
+    el.dataset.univ = u;
+    el.onclick = () => {
+      document.querySelectorAll('#homeUnivGrid .univ-card').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      STATE.homeUniv = u;
+    };
+    hg.appendChild(el);
+  });
+
+  // Preferred Universities
+  const ug = document.getElementById('univGrid');
+  DB.univs.forEach(u => {
+    const el = document.createElement('div');
+    el.className = 'univ-card';
+    el.innerHTML = `<div class="univ-checkbox"></div><div class="univ-name">${u}</div>`;
+    el.dataset.univ = u;
+    el.onclick = () => {
+      el.classList.toggle('active');
+      STATE.selUnivs = Array.from(document.querySelectorAll('#univGrid .univ-card.active')).map(x => x.dataset.univ);
+      document.getElementById('univSelCount').textContent = STATE.selUnivs.length + ' selected';
+    };
+    ug.appendChild(el);
+  });
+  document.getElementById('univSelCount').textContent = '0 selected';
+
+  // Inst Types
+  const itg = document.getElementById('instTypeGrid');
+  Object.keys(INST_TYPES_SHORT).forEach(k => {
+    const el = document.createElement('div');
+    el.className = 'cat-pill';
+    el.textContent = k;
+    el.dataset.key = k;
+    el.onclick = () => {
+      el.classList.toggle('active');
+      STATE.instTypes = Array.from(document.querySelectorAll('#instTypeGrid .cat-pill.active')).map(x => x.dataset.key);
+    };
+    itg.appendChild(el);
+  });
+
+  // Branches
+  renderBranchList(DB.branches);
+}
+
+// ═══════════════════════════════════════════════════
+//  STEP NAVIGATION
+// ═══════════════════════════════════════════════════
+function goToStep(n) {
+  // Save current values before leaving
+  STATE.name = document.getElementById('userName').value;
+  STATE.email = document.getElementById('userEmail').value;
+  STATE.phone = document.getElementById('userPhone').value;
+  STATE.gender = document.getElementById('userGender').value;
+  STATE.district = document.getElementById('userDistrict').value;
+
+  document.querySelectorAll('.step-page').forEach((el,i) => el.classList.toggle('active', i === n));
+  document.querySelectorAll('.step-tab').forEach((el,i) => {
+    el.classList.toggle('active', i === n);
+    if(i < n) el.classList.add('done'); else el.classList.remove('done');
+  });
+  document.querySelectorAll('.mob-nav-btn').forEach((el,i) => el.classList.toggle('active', i === n));
+  STATE.step = n;
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════════════
+//  PERCENTILE
+// ═══════════════════════════════════════════════════
+function onSlider(v) {
+  STATE.percentile = parseFloat(v);
+  document.getElementById('pctInput').value = parseFloat(v).toFixed(2);
+  document.getElementById('pctDisplay').innerHTML = parseFloat(v).toFixed(2) + '<span class="pct-unit">%ile</span>';
+}
+function onPctInput(v) {
+  let val = Math.min(100, Math.max(0, parseFloat(v)||0));
+  STATE.percentile = val;
+  document.getElementById('pctSlider').value = val;
+  document.getElementById('pctDisplay').innerHTML = val.toFixed(2) + '<span class="pct-unit">%ile</span>';
+}
+
+// ═══════════════════════════════════════════════════
+//  CATEGORIES
+// ═══════════════════════════════════════════════════
+function toggleCat(id, el) {
+  el.classList.toggle('active');
+  STATE.categories = Array.from(document.querySelectorAll('#catGrid .cat-pill.active')).map(x => x.dataset.id);
+  updateCatNote();
+}
+function updateCatNote() {
+  const note = document.getElementById('catNote');
+  const txt = document.getElementById('catNoteText');
+  if(STATE.categories.length === 0) { note.style.display='none'; return; }
+  const eligSet = new Set();
+  STATE.categories.forEach(c => (CAT_ELIGIBILITY[c]||[c]).forEach(e => eligSet.add(e)));
+  if(eligSet.has('OPEN') && STATE.categories.some(c => c !== 'OPEN')) {
+    txt.textContent = `With your selected category, you are eligible for OPEN category seats + ${STATE.categories.filter(c=>c!=='OPEN').join(', ')} reserved seats.`;
+    note.style.display='flex';
+  } else {
+    note.style.display='none';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  BRANCHES
+// ═══════════════════════════════════════════════════
+function renderBranchList(list) {
+  const grid = document.getElementById('branchGrid');
+  grid.innerHTML = '';
+  list.forEach(b => {
+    const isSel = STATE.selBranches.includes(b);
+    const el = document.createElement('div');
+    el.className = 'branch-item' + (isSel?' sel':'');
+    el.innerHTML = `<div class="branch-cb"></div><div class="branch-text">${b}</div>`;
+    el.dataset.branch = b;
+    el.onclick = () => toggleBranch(b, el);
+    grid.appendChild(el);
+  });
+  updateBranchCount();
+}
+function toggleBranch(b, el) {
+  const idx = STATE.selBranches.indexOf(b);
+  if(idx >= 0) STATE.selBranches.splice(idx,1);
+  else STATE.selBranches.push(b);
+  el.classList.toggle('sel', STATE.selBranches.includes(b));
+  updateBranchCount();
+  renderSelTags();
+}
+function filterBranches(q) {
+  const filtered = q ? DB.branches.filter(b => b.toLowerCase().includes(q.toLowerCase())) : DB.branches;
+  renderBranchList(filtered);
+}
+function selectAllBranches() { STATE.selBranches = [...DB.branches]; renderBranchList(DB.branches); renderSelTags(); }
+function clearBranches() { STATE.selBranches = []; renderBranchList(DB.branches); renderSelTags(); }
+function selectCSBranches() {
+  const cs = DB.branches.filter(b => CS_KEYWORDS.some(k => b.toLowerCase().includes(k.toLowerCase())));
+  cs.forEach(b => { if(!STATE.selBranches.includes(b)) STATE.selBranches.push(b); });
+  renderBranchList(DB.branches); renderSelTags();
+  showToast('💻 CS/IT branches selected!');
+}
+function selectECBranches() {
+  const ec = DB.branches.filter(b => EC_KEYWORDS.some(k => b.toLowerCase().includes(k.toLowerCase())));
+  ec.forEach(b => { if(!STATE.selBranches.includes(b)) STATE.selBranches.push(b); });
+  renderBranchList(DB.branches); renderSelTags();
+  showToast('📡 EC/EE branches selected!');
+}
+function updateBranchCount() {
+  document.getElementById('selBranchCount').textContent = STATE.selBranches.length + ' selected';
+}
+function renderSelTags() {
+  const wrap = document.getElementById('selTags');
+  wrap.innerHTML = '';
+  STATE.selBranches.slice(0,8).forEach(b => {
+    const tag = document.createElement('div');
+    tag.className = 'sel-tag';
+    tag.innerHTML = `${b.length > 30 ? b.substring(0,28)+'…' : b} <button onclick="removeTag('${b.replace(/'/g,"\\'")}')">×</button>`;
+    wrap.appendChild(tag);
+  });
+  if(STATE.selBranches.length > 8) {
+    const more = document.createElement('div');
+    more.className = 'sel-tag';
+    more.style.background = 'rgba(255,107,0,0.12)';
+    more.style.borderColor = 'rgba(255,107,0,0.3)';
+    more.style.color = 'var(--saffron-l)';
+    more.textContent = '+' + (STATE.selBranches.length-8) + ' more';
+    wrap.appendChild(more);
+  }
+}
+function removeTag(b) {
+  const idx = STATE.selBranches.indexOf(b);
+  if(idx >= 0) STATE.selBranches.splice(idx,1);
+  document.querySelectorAll('.branch-item').forEach(el => {
+    if(el.dataset.branch === b) el.classList.remove('sel');
+  });
+  updateBranchCount();
+  renderSelTags();
+}
+function selectAllUnivs() {
+  document.querySelectorAll('#univGrid .univ-card').forEach(el => el.classList.add('active'));
+  STATE.selUnivs = [...DB.univs];
+  document.getElementById('univSelCount').textContent = STATE.selUnivs.length + ' selected';
+}
+function clearUnivs() {
+  document.querySelectorAll('#univGrid .univ-card').forEach(el => el.classList.remove('active'));
+  STATE.selUnivs = [];
+  document.getElementById('univSelCount').textContent = '0 selected';
+}
+
+// ═══════════════════════════════════════════════════
+//  SEARCH / PREDICT
+// ═══════════════════════════════════════════════════
+function doSearch() {
+  STATE.buffer = parseFloat(document.getElementById('bufferInput').value) || 0;
+
+  if(STATE.categories.length === 0) { showToast('⚠️ Please select at least one category!'); goToStep(1); return; }
+  if(STATE.selBranches.length === 0) { showToast('⚠️ Please select at least one branch!'); return; }
+
+  // Build eligible category set
+  const eligCats = new Set();
+  STATE.categories.forEach(c => (CAT_ELIGIBILITY[c]||[c]).forEach(e => eligCats.add(e)));
+
+  // Build eligible inst types
+  const eligInstTypes = new Set();
+  if(STATE.instTypes.length === 0) {
+    // all
+  } else {
+    STATE.instTypes.forEach(k => (INST_TYPES_SHORT[k]||[]).forEach(t => eligInstTypes.add(t)));
+  }
+
+  // Build college map
+  const collegeMap = {};
+  DB.colleges.forEach(c => { collegeMap[c.code] = c; });
+
+  // Filter records
+  const maxCutoff = STATE.percentile + STATE.buffer;
+  const results = [];
+  DB.records.forEach(([code, branch, catGroup, cutoff, rank]) => {
+    if(!eligCats.has(catGroup)) return;
+    if(cutoff > maxCutoff) return;
+    if(!STATE.selBranches.includes(branch)) return;
+    const college = collegeMap[code];
+    if(!college) return;
+    if(STATE.selUnivs.length > 0 && !STATE.selUnivs.includes(college.univ)) return;
+    if(eligInstTypes.size > 0 && !eligInstTypes.has(college.type)) return;
+    const gap = STATE.percentile - cutoff;
+    results.push({code, college: college.name, branch, catGroup, cutoff, rank, gap, univ: college.univ, instType: college.type});
+  });
+
+  STATE.results = results;
+  STATE.page = 1;
+
+  // Populate result filters
+  populateResultFilters(results);
+
+  // Apply sort and display
+  applyResultFilters();
+
+  goToStep(4);
+
+  // Build user summary
+  buildSummary(results);
+}
+
+function populateResultFilters(results) {
+  const branches = [...new Set(results.map(r=>r.branch))].sort();
+  const cats = [...new Set(results.map(r=>r.catGroup))].sort();
+  ['resBranchFilter','resCatFilter'].forEach((id,i) => {
+    const sel = document.getElementById(id);
+    const items = i === 0 ? branches : cats;
+    sel.innerHTML = '<option value="">All '+(i===0?'Branches':'Categories')+'</option>';
+    items.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o); });
+  });
+}
+
+function applyResultFilters() {
+  const q = (document.getElementById('resCollegeSearch')?.value||'').toLowerCase();
+  const sortVal = document.getElementById('resSort')?.value || 'cutoff_desc';
+  const branchF = document.getElementById('resBranchFilter')?.value || '';
+  const catF = document.getElementById('resCatFilter')?.value || '';
+  const chanceF = document.getElementById('resChanceFilter')?.value || '';
+
+  let filtered = STATE.results.filter(r => {
+    if(q && !r.college.toLowerCase().includes(q) && !r.branch.toLowerCase().includes(q)) return false;
+    if(branchF && r.branch !== branchF) return false;
+    if(catF && r.catGroup !== catF) return false;
+    if(chanceF) {
+      const ch = getChance(r.gap);
+      if(ch.key !== chanceF) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  const [col, dir] = sortVal === 'cutoff_desc' ? ['cutoff','desc']
+    : sortVal === 'cutoff_asc' ? ['cutoff','asc']
+    : sortVal === 'gap_asc' ? ['gap','desc']
+    : sortVal === 'name_asc' ? ['college','asc']
+    : ['branch','asc'];
+  filtered.sort((a,b) => {
+    let v1 = a[col], v2 = b[col];
+    if(typeof v1 === 'string') v1 = v1.toLowerCase(), v2 = v2.toLowerCase();
+    if(v1 < v2) return dir === 'asc' ? -1 : 1;
+    if(v1 > v2) return dir === 'asc' ? 1 : -1;
+    return 0;
+  });
+
+  STATE.filteredResults = filtered;
+  renderTable();
+}
+
+function setSortCol(col) {
+  if(STATE.sortCol === col) STATE.sortDir = STATE.sortDir === 'asc' ? 'desc' : 'asc';
+  else { STATE.sortCol = col; STATE.sortDir = 'asc'; }
+  document.querySelectorAll('thead th').forEach(th => th.classList.remove('sorted'));
+  const el = document.querySelector(`#sa-${col}`);
+  if(el) { el.closest('th').classList.add('sorted'); el.textContent = STATE.sortDir === 'asc' ? '↑' : '↓'; }
+  
+  const sorted = [...STATE.filteredResults].sort((a,b) => {
+    let v1 = a[col], v2 = b[col];
+    if(typeof v1 === 'string') v1 = v1.toLowerCase(), v2 = v2.toLowerCase();
+    if(v1 < v2) return STATE.sortDir === 'asc' ? -1 : 1;
+    if(v1 > v2) return STATE.sortDir === 'asc' ? 1 : -1;
+    return 0;
+  });
+  STATE.filteredResults = sorted;
+  renderTable();
+}
+
+function renderTable() {
+  const filtered = STATE.filteredResults;
+  const total = filtered.length;
+  const pages = Math.ceil(total / STATE.pageSize);
+  STATE.page = Math.min(STATE.page, Math.max(1, pages));
+  const start = (STATE.page - 1) * STATE.pageSize;
+  const slice = filtered.slice(start, start + STATE.pageSize);
+
+  const countEl = document.getElementById('resultsCount');
+  const pgInfo = document.getElementById('pgInfo');
+  const body = document.getElementById('resultsBody');
+  const resultsPanel = document.getElementById('resultsPanel');
+  const emptyState = document.getElementById('emptyState');
+
+  if(total === 0) {
+    resultsPanel.style.display = 'none';
+    emptyState.style.display = 'block';
+    return;
+  }
+  resultsPanel.style.display = 'block';
+  emptyState.style.display = 'none';
+
+  countEl.innerHTML = `Found <span>${total.toLocaleString()}</span> eligible options`;
+  pgInfo.textContent = `Page ${STATE.page} of ${pages} · Showing ${start+1}–${Math.min(start+STATE.pageSize,total)}`;
+
+  body.innerHTML = '';
+  slice.forEach((r, i) => {
+    const chance = getChance(r.gap);
+    const instBadge = getInstBadge(r.instType);
+    const tr = document.createElement('tr');
+    tr.className = 'row-hl';
+    tr.innerHTML = `
+      <td class="col-rank">${start+i+1}</td>
+      <td class="col-college">
+        <div>${r.college}</div>
+        <span class="college-code">${r.code}</span>
+        <span class="badge-type ${instBadge.cls}">${instBadge.label}</span>
+      </td>
+      <td class="col-branch">${r.branch}</td>
+      <td>${r.catGroup}</td>
+      <td class="col-cutoff" style="color:${r.cutoff >= 90 ? 'var(--sky-l)' : r.cutoff >= 70 ? 'var(--white)' : 'var(--muted)'}">${r.cutoff.toFixed(4)}</td>
+      <td class="col-gap" style="color:${chance.color}">+${r.gap.toFixed(2)}</td>
+      <td class="col-chance"><span class="chance-badge ${chance.cls}">${chance.label}</span></td>
+    `;
+    tr.onclick = () => showModal(r);
+    body.appendChild(tr);
+  });
+
+  renderPagination(pages);
+}
+
+function getChance(gap) {
+  if(gap >= 5) return {label:'✅ Safe', cls:'chance-safe', key:'safe', color:'var(--green-l)', pct:90};
+  if(gap >= 2) return {label:'🟢 Good', cls:'chance-good', key:'good', color:'var(--sky-l)', pct:70};
+  if(gap >= 0) return {label:'🟡 Borderline', cls:'chance-border', key:'border', color:'var(--yellow)', pct:45};
+  return {label:'🔴 Tough', cls:'chance-tough', key:'tough', color:'var(--saffron-l)', pct:20};
+}
+function getInstBadge(type) {
+  if(!type) return {cls:'badge-pvt',label:'Private'};
+  if(type.startsWith('Government Autonomous') || type.startsWith('Government Home')) return {cls:'badge-govt',label:'Govt'};
+  if(type.startsWith('Government-Aided')) return {cls:'badge-aided',label:'Aided'};
+  if(type.startsWith('University')) return {cls:'badge-aided',label:'Univ.'};
+  if(type.startsWith('Deemed')) return {cls:'badge-pvt',label:'Deemed'};
+  return {cls:'badge-pvt',label:'Private'};
+}
+
+function renderPagination(pages) {
+  const wrap = document.getElementById('pagination');
+  wrap.innerHTML = '';
+  if(pages <= 1) return;
+  const addBtn = (text, page, isActive, isDisabled) => {
+    const btn = document.createElement('button');
+    btn.className = 'pg-btn' + (isActive?' active':'');
+    btn.textContent = text;
+    btn.disabled = isDisabled;
+    btn.onclick = () => { STATE.page = page; renderTable(); window.scrollTo({top:document.getElementById('resultsPanel').offsetTop-80, behavior:'smooth'}); };
+    wrap.appendChild(btn);
+  };
+  addBtn('‹', STATE.page-1, false, STATE.page===1);
+  const range = [];
+  for(let i=1;i<=pages;i++) {
+    if(i===1||i===pages||Math.abs(i-STATE.page)<=2) range.push(i);
+    else if(range[range.length-1] !== '…') range.push('…');
+  }
+  range.forEach(p => {
+    if(p==='…') { const s=document.createElement('span'); s.textContent='…'; s.style.padding='0.4rem 0.3rem'; s.style.color='var(--muted)'; wrap.appendChild(s); }
+    else addBtn(p, p, p===STATE.page, false);
+  });
+  addBtn('›', STATE.page+1, false, STATE.page===pages);
+}
+
+function buildSummary(results) {
+  const safe = results.filter(r=>r.gap>=5).length;
+  const good = results.filter(r=>r.gap>=2&&r.gap<5).length;
+  const border = results.filter(r=>r.gap>=0&&r.gap<2).length;
+  const name = document.getElementById('userName').value || 'Student';
+  const el = document.getElementById('userSummary');
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;flex-wrap:wrap">
+      <div>
+        <div style="font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800">${name}'s Prediction Report</div>
+        <div style="font-size:0.75rem;color:var(--muted)">Percentile: <strong style="color:var(--sky-l)">${STATE.percentile.toFixed(2)}%ile</strong> · Category: <strong style="color:var(--saffron-l)">${STATE.categories.join(', ')||'None'}</strong></div>
+      </div>
+    </div>
+    <div class="summary-grid">
+      <div class="ring-wrap"><div class="sum-item-num sum-green">${safe.toLocaleString()}</div><div class="sum-item-label">✅ Safe Seats</div></div>
+      <div class="ring-wrap"><div class="sum-item-num sum-blue">${good.toLocaleString()}</div><div class="sum-item-label">🟢 Good Seats</div></div>
+      <div class="ring-wrap"><div class="sum-item-num sum-yellow">${border.toLocaleString()}</div><div class="sum-item-label">🟡 Borderline</div></div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════
+function showModal(r) {
+  const chance = getChance(r.gap);
+  // find all cutoffs for this college+branch
+  const collegeMap = {};
+  DB.colleges.forEach(c => collegeMap[c.code] = c);
+  const allCutoffs = DB.records.filter(([code, branch]) => code === r.code && branch === r.branch)
+    .map(([c,b,cat,cutoff]) => ({cat, cutoff}))
+    .sort((a,b) => b.cutoff - a.cutoff);
+
+  const maxC = Math.max(...allCutoffs.map(x=>x.cutoff), 0);
+
+  document.getElementById('modalBody').innerHTML = `
+    <div class="modal-title">${r.college}</div>
+    <div class="modal-sub">${r.branch} · Code: ${r.code} · ${r.univ}</div>
+    <div class="detail-grid">
+      <div class="detail-card"><div class="detail-label">Your Percentile</div><div class="detail-val" style="color:var(--sky-l)">${STATE.percentile.toFixed(2)}</div></div>
+      <div class="detail-card"><div class="detail-label">Cutoff (${r.catGroup})</div><div class="detail-val">${r.cutoff.toFixed(4)}</div></div>
+      <div class="detail-card"><div class="detail-label">Gap / Buffer</div><div class="detail-val" style="color:${chance.color}">+${r.gap.toFixed(4)}</div></div>
+      <div class="detail-card"><div class="detail-label">Cutoff Rank</div><div class="detail-val">${r.rank ? r.rank.toLocaleString() : 'N/A'}</div></div>
+      <div class="detail-card"><div class="detail-label">Category</div><div class="detail-val">${r.catGroup}</div></div>
+      <div class="detail-card"><div class="detail-label">Institution Type</div><div class="detail-val" style="font-size:0.85rem;line-height:1.2">${r.instType||'—'}</div></div>
+    </div>
+    <div class="chance-meter">
+      <div class="chance-meter-label">Admission Chance: <strong style="color:${chance.color}">${chance.label}</strong></div>
+      <div class="chance-bar-wrap"><div class="chance-bar-fill" style="width:${chance.pct}%;background:${chance.color}"></div></div>
+    </div>
+    <div class="cat-breakdown" style="margin-top:1rem">
+      <div class="cat-breakdown-title">All Category Cutoffs — ${r.branch}</div>
+      ${allCutoffs.map(x => `
+        <div class="cat-row">
+          <div class="cat-row-name">${x.cat}</div>
+          <div class="cat-row-bar"><div class="cat-row-fill" style="width:${(x.cutoff/maxC*100).toFixed(1)}%"></div></div>
+          <div class="cat-row-val">${x.cutoff.toFixed(2)}</div>
+        </div>`).join('')}
+    </div>
+  `;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e) { if(e.target === document.getElementById('modalOverlay')) closeModalBtn(); }
+function closeModalBtn() { document.getElementById('modalOverlay').classList.remove('open'); }
+
+// ═══════════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════════
+function exportCSV() {
+  const name = document.getElementById('userName').value || 'Student';
+  const rows = [['#','College','Branch','Category','Cutoff %ile','Gap','Cutoff Rank','University','Inst. Type','Chance']];
+  STATE.filteredResults.forEach((r,i) => {
+    const ch = getChance(r.gap);
+    rows.push([i+1, `"${r.college}"`, `"${r.branch}"`, r.catGroup, r.cutoff.toFixed(4), r.gap.toFixed(4), r.rank||'', `"${r.univ}"`, `"${r.instType||''}"`, ch.label.replace(/[^\w\s]/g,'')]);
+  });
+  const csv = rows.map(r=>r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `CAP_Predictor_${name.replace(/\s+/g,'_')}_${STATE.percentile.toFixed(0)}pct.csv`;
+  a.click();
+  showToast('✅ CSV exported!');
+}
+function printResults() { window.print(); }
+function shareResults() {
+  const url = window.location.href;
+  if(navigator.share) {
+    navigator.share({title:'MHT-CET College Predictor', text:`My college predictor results (${STATE.percentile}%ile)`, url});
+  } else {
+    navigator.clipboard.writeText(url).then(() => showToast('🔗 Link copied!'));
+  }
+}
+
+// ═══════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ═══════════════════════════════════════════════════
+//  BOOT
+// ═══════════════════════════════════════════════════
+loadData();
+</script>
+</body>
+</html>
